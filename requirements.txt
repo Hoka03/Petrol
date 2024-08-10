@@ -15,6 +15,7 @@ djangorestframework==3.15.2
 docopt==0.6.2
 executing==2.0.1
 fastjsonschema==2.20.0
+gunicorn==22.0.0
 idna==3.7
 ipython==8.12.3
 jedi==0.19.1
@@ -49,7 +50,6 @@ pyzmq==26.0.3
 referencing==0.35.1
 requests==2.32.3
 rpds-py==0.19.1
-setuptools==72.1.0
 six==1.16.0
 soupsieve==2.5
 sqlparse==0.5.1
@@ -60,5 +60,4 @@ traitlets==5.14.3
 urllib3==2.2.2
 wcwidth==0.2.13
 webencodings==0.5.1
-wheel==0.44.0
 yarg==0.1.9

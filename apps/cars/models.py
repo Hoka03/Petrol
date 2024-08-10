@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.core.validators import ValidationError
+from django.contrib.postgres.fields import ArrayField
 
 from .validations import CarNumberValidator
 from apps.general.enums.petrol_mark import PetrolMarkChoices
@@ -23,7 +24,7 @@ class Car(models.Model):
 
     number = models.CharField(max_length=8, validators=[CarNumberValidator], unique=True)
     color = models.CharField(max_length=50)
-    petrol_mark = models.CharField(max_length=50, choices=PetrolMarkChoices.choices)    # arrayfield
+    petrol_mark = ArrayField(models.CharField(choices=PetrolMarkChoices.choices))
 
     def clean(self):
         if not self.model.parent.parent:

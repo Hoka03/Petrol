@@ -1,11 +1,20 @@
 from django.conf import settings
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.postgres.fields import ArrayField
+
 from apps.general.enums.petrol_mark import PetrolMarkChoices
 from apps.general.enums.week_day import WeekDayChoices
 
 
 class Station(models.Model):
+    class Comforts(models.IntegerChoices):
+        MOSQUE = 1, 'Mosque'
+        PARK = 2, 'Park'
+        GYM = 3, 'Gym'
+        SHOPPING_MALL = 4, 'Shopping Mall'
+        WC = 5,
+
     name = models.CharField(max_length=150)
     description = models.TextField(max_length=1500)
 
@@ -21,7 +30,10 @@ class Station(models.Model):
     longitude = models.FloatField()
 
     video = models.FileField(upload_to='stations/videos/%Y/%m/%d/')
-    comforts_array = models.CharField(max_length=200) # Arrayfield
+    comforts_array = ArrayField(
+        models.IntegerField(choices=Comforts.choices),
+        blank=True,
+    )
 
     def __str__(self):
         return self.name
