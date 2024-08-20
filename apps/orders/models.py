@@ -7,7 +7,8 @@ from config import settings
 
 
 class Order(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.SET_NULL, null=True)  # last
     amount = models.FloatField()
     is_paid = models.BooleanField(default=False)
 
@@ -22,3 +23,8 @@ class Order(models.Model):
         if self.is_paid and not self.paid_at:
             self.paid_at = now()
         return super().save(*args, **kwargs)
+
+    # def save_phone_number(self):
+    #     if self.user:
+    #         self.phone_number = self.user.phone_number
+    #         self.save()

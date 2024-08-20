@@ -1,3 +1,13 @@
-from django.shortcuts import render
+from rest_framework.generics import CreateAPIView
+from rest_framework.permissions import IsAuthenticated
 
-# Create your views here.
+from .models import Booking
+from .serializers import BookingCreateSerializer
+from .permissions import CheckUserBalance
+
+
+class BookingCreateAPIView(CreateAPIView):
+    permission_classes = (IsAuthenticated, CheckUserBalance)
+
+    queryset = Booking.objects.all()
+    serializer_class = BookingCreateSerializer

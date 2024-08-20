@@ -1,4 +1,6 @@
+from django.conf import settings
 from django.db import models
+from django.db.models import SET_NULL
 
 
 class Complaint(models.Model):
@@ -15,9 +17,18 @@ class Complaint(models.Model):
         SCOLD = 5
         OTHERS = 6
 
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True,
+                                blank=True, related_name='complaints')
+    station = models.ForeignKey('stations.Station', on_delete=models.SET_NULL, null=True,
+                                blank=True, related_name='station')
+    review = models.ForeignKey('stations.StationRating', on_delete=SET_NULL, null=True,
+                               blank=True, related_name='reviews')
+
     section = models.PositiveSmallIntegerField(choices=SectionChoices.choices)
     complaint_type = models.PositiveSmallIntegerField(choices=TypeChoices.choices)
-    message = models.CharField(max_length=250, blank=True)
-    viewed = models.BooleanField(default=False)
 
+    message = models.CharField(max_length=250, blank=True)
+
+    viewed = models.BooleanField(default=False)
+    
     created_at = models.DateTimeField(auto_now_add=True)

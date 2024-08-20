@@ -1,4 +1,5 @@
 import os
+
 from django.conf import settings
 
 
@@ -21,3 +22,4 @@ else:
             'NAME': settings.BASE_DIR / 'db.sqlite3',
         }
     }
+

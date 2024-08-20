@@ -1,3 +1,4 @@
-from django.test import TestCase
+add_ten = lambda x: x + 10
 
-# Create your tests here.
+result = add_ten(5)
+print(result)
