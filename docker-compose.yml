@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  service:
+    build: .
+    container_name: my_petrol
+    command: sh -c "python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres_base
+      - redis
+
+  postgres_base:
+    image: postgres:15
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=petrol_db
+      - POSTGRES_USER=oil_user
+      - POSTGRES_PASSWORD=oilbenzin
+
+  celery:
+    build: .
+    container_name: my_celery
+    command: celery -A config worker --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6380/1
+
+  redis:
+    image: redis:6-alpine
+    container_name: my_redis
+    ports:
+      - "6380:6379"
+
+volumes:
+  postgres_data:

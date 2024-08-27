@@ -8,6 +8,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('__debug__', include("debug_toolbar.urls")),
     #   APPS OF VIEWS
+
+
+
+
     path('api/v1/auth/', include('apps.authentication.urls')),
     path('api/v1/users/', include('apps.users.urls')),
     path('api/v1/bookings/', include('apps.booking.urls')),
